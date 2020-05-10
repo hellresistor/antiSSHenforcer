@@ -47,7 +47,7 @@ echo "CONFIGURE SSH"
 groupadd "$SshGrp"
 usermod -aG "$SshGrp" "$UsrAdm"
 
-cp --preserve /etc/ssh/sshd_config /etc/ssh/sshd_config.$(date +"%Y%m%d%H%M%S")
+cp --preserve /etc/ssh/sshd_config /etc/ssh/sshd_config.'$(date +"%Y%m%d%H%M%S")'
 sed -i -r -e '/^#|^$/ d' /etc/ssh/sshd_config
 cat > /etc/ssh/sshd_config <<-EOF
 Protocol 2
@@ -91,7 +91,7 @@ PubkeyAuthentication yes
 ChallengeResponseAuthentication no
 EOF
 
-cp --preserve /etc/ssh/moduli /etc/ssh/moduli.$(date +"%Y%m%d%H%M%S")
+cp --preserve /etc/ssh/moduli /etc/ssh/moduli."$(date +"%Y%m%d%H%M%S")"
 
 # Remove all moduli smaller than 3072 bits.
 awk '$5 >= 3072' /etc/ssh/moduli | tee /etc/ssh/moduli.tmp
@@ -101,7 +101,7 @@ mv /etc/ssh/moduli.tmp /etc/ssh/moduli
 service ssh restart
 
 function finish {
-echo "Securely shredding ${currentscript}"; shred -u ${currentscript}; shred -u ${currentscript}.log; reboot;
+echo "Securely shredding ${currentscript}"; shred -u "${currentscript}"; reboot;
 }
 
 trap finish EXIT
