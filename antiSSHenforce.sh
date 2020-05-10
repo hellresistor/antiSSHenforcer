@@ -47,7 +47,7 @@ echo "CONFIGURE SSH"
 groupadd "$SshGrp"
 usermod -aG "$SshGrp" "$UsrAdm"
 
-cp --preserve /etc/ssh/sshd_config /etc/ssh/sshd_config.'$(date +"%Y%m%d%H%M%S")'
+cp --preserve /etc/ssh/sshd_config /etc/ssh/sshd_config."$(date +"%Y%m%d%H%M%S")"
 sed -i -r -e '/^#|^$/ d' /etc/ssh/sshd_config
 cat > /etc/ssh/sshd_config <<-EOF
 Protocol 2
